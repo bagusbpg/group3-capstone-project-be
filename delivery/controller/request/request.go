@@ -3,7 +3,7 @@ package request
 import (
 	_common "capstone/be/delivery/common"
 	_helper "capstone/be/delivery/helper"
-	"capstone/be/delivery/middleware"
+	_midware "capstone/be/delivery/middleware"
 	_entity "capstone/be/entity"
 	_requestRepo "capstone/be/repository/request"
 	"fmt"
@@ -26,14 +26,14 @@ func New(request _requestRepo.Request) *RequestController {
 
 func (rc RequestController) Borrow() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		idLogin := middleware.ExtractId(c)
+		idLogin := _midware.ExtractId(c)
 		newReq := _entity.CreateBorrow{}
 		// handle failure in binding
 		if err := c.Bind(&newReq); err != nil {
 			return c.JSON(http.StatusBadRequest, _common.NoDataResponse(http.StatusBadRequest, "failed to bind data"))
 		}
 
-		role := middleware.ExtractRole(c)
+		role := _midware.ExtractRole(c)
 		switch role {
 		case "Administrator":
 			reqData := _entity.Borrow{}
@@ -69,6 +69,10 @@ func (rc RequestController) Borrow() echo.HandlerFunc {
 			if err != nil {
 				return c.JSON(http.StatusBadRequest, _common.NoDataResponse(http.StatusBadRequest, "failed create request"))
 			}
+			_, err = rc.repository.UpdateAssetStatus(assetId)
+			if err != nil {
+				return c.JSON(http.StatusBadRequest, _common.NoDataResponse(http.StatusBadRequest, "failed update asset status"))
+			}
 			return c.JSON(http.StatusOK, _common.NoDataResponse(http.StatusOK, "Success create request"))
 		case "Employee":
 			reqData := _entity.Borrow{}
@@ -103,6 +107,10 @@ func (rc RequestController) Borrow() echo.HandlerFunc {
 			if err != nil {
 				return c.JSON(http.StatusBadRequest, _common.NoDataResponse(http.StatusBadRequest, "failed create request"))
 			}
+			_, err = rc.repository.UpdateAssetStatus(assetId)
+			if err != nil {
+				return c.JSON(http.StatusBadRequest, _common.NoDataResponse(http.StatusBadRequest, "failed update asset status"))
+			}
 			return c.JSON(http.StatusOK, _common.NoDataResponse(http.StatusOK, "Success create request"))
 		default:
 			return c.JSON(http.StatusOK, _common.NoDataResponse(http.StatusOK, "Invalid input request"))
@@ -112,7 +120,7 @@ func (rc RequestController) Borrow() echo.HandlerFunc {
 
 func (rc RequestController) Procure() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		idLogin := middleware.ExtractId(c)
+		idLogin := _midware.ExtractId(c)
 		newReq := _entity.CreateProcure{}
 		// handle failure in binding
 		if err := c.Bind(&newReq); err != nil {
@@ -203,10 +211,10 @@ func (rc RequestController) UpdateBorrow() echo.HandlerFunc {
 			return c.JSON(http.StatusBadRequest, _common.NoDataResponse(http.StatusBadRequest, "failed to bind data"))
 		}
 
-		role := middleware.ExtractRole(c)
+		role := _midware.ExtractRole(c)
 
 		// check manager division and employee division
-		idLogin := middleware.ExtractId(c)
+		idLogin := _midware.ExtractId(c)
 		switch role {
 		case "Manager":
 			divLogin, err := rc.repository.GetUserDivision(idLogin)
@@ -268,10 +276,10 @@ func (rc RequestController) UpdateProcure() echo.HandlerFunc {
 		if err := c.Bind(&newReq); err != nil {
 			return c.JSON(http.StatusBadRequest, _common.NoDataResponse(http.StatusBadRequest, "failed to bind data"))
 		}
-		role := middleware.ExtractRole(c)
+		role := _midware.ExtractRole(c)
 
 		// check manager division and employee division
-		idLogin := middleware.ExtractId(c)
+		idLogin := _midware.ExtractId(c)
 		switch role {
 		case "Manager":
 			divLogin, err := rc.repository.GetUserDivision(idLogin)

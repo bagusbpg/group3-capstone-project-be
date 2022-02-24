@@ -2,6 +2,7 @@ package router
 
 import (
 	_activity "capstone/be/delivery/controller/activity"
+	_admin "capstone/be/delivery/controller/admin"
 	_asset "capstone/be/delivery/controller/asset"
 	_history "capstone/be/delivery/controller/history"
 	_request "capstone/be/delivery/controller/request"
@@ -21,6 +22,7 @@ func RegisterPath(
 	historyController *_history.HistoryController,
 	requestController *_request.RequestController,
 	activityController *_activity.ActivityController,
+	adminController *_admin.AdminController,
 ) {
 	// Root
 	e.GET("/", func(c echo.Context) error {
@@ -42,4 +44,26 @@ func RegisterPath(
 	e.GET("/assets/keyword/:keyword/:page", assetController.GetAssetByKeyword())
 	e.GET("/assets/:id", assetController.GetById())
 	e.PUT("/assets/:id", assetController.Update(), _midware.JWTMiddleWare())
+	e.GET("/stats", assetController.GetStats(), _midware.JWTMiddleWare())
+
+	// History
+	e.GET("/histories/users/:user_id", historyController.GetAllRequestHistoryOfUser(), _midware.JWTMiddleWare())
+	e.GET("/histories/users/:user_id/:request_id", historyController.GetDetailRequestHistoryByRequestId(), _midware.JWTMiddleWare())
+	e.GET("/histories/assets/:short_name", historyController.GetAllUsageHistoryOfAsset(), _midware.JWTMiddleWare())
+
+	// Request by Employee
+	e.POST("/requests/borrow", requestController.Borrow(), _midware.JWTMiddleWare())
+	e.POST("/requests/procure", requestController.Procure(), _midware.JWTMiddleWare())
+
+	// Update by Manager and Manager
+	e.PUT("/requests/borrow/:id", requestController.UpdateBorrow(), _midware.JWTMiddleWare())
+	e.PUT("/requests/procure/:id", requestController.UpdateProcure(), _midware.JWTMiddleWare())
+
+	//Admin
+	e.GET("/requests/admin", adminController.HomePageGetAll(), _midware.JWTMiddleWare())
+
+	// Activity
+	e.GET("/activities/:user_id", activityController.GetAllActivityOfUser(), _midware.JWTMiddleWare())
+	e.GET("/activities/:user_id/:request_id", activityController.GetDetailActivityByRequestId(), _midware.JWTMiddleWare())
+	e.PUT("/activities/:user_id/:request_id", activityController.UpdateRequestStatus(), _midware.JWTMiddleWare())
 }
