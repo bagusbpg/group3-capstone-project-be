@@ -52,17 +52,16 @@ func (uc AssetController) GetAll() echo.HandlerFunc {
 }
 func (uc AssetController) GetAssetByCategory() echo.HandlerFunc {
 	return func(c echo.Context) error {
-		p := strings.TrimSpace(c.QueryParam("page"))
-		log.Println(p)
-		if p == "" {
-			p = "1"
-		}
-		page, err := strconv.Atoi(p)
+		// p := c.Param("page")
+		// // log.Println(p)
+		// // if p == "" {
+		// // 	p = "1"
+		// // }
+		page, err := strconv.Atoi(c.Param("page"))
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, _common.NoDataResponse(http.StatusBadRequest, "invalid page number"))
 		}
-		category := c.QueryParam("category")
-
+		category := c.Param("category")
 		asset, code, err := uc.repository.GetAssetByCategory(category, page)
 		if err != nil {
 			return c.JSON(code, _common.NoDataResponse(code, err.Error()))
@@ -240,10 +239,7 @@ func (uc AssetController) GetAssetByKeyword() echo.HandlerFunc {
 		if err != nil {
 			return c.JSON(http.StatusBadRequest, _common.NoDataResponse(http.StatusBadRequest, "invalid page number"))
 		}
-		keyword := c.QueryParam("keyword")
-		if keyword == "" {
-			keyword = "dell"
-		}
+		keyword := c.Param("keyword")
 		asset, code, err := uc.repository.GetAssetByKeyword(keyword, page)
 		if err != nil {
 			return c.JSON(code, _common.NoDataResponse(code, err.Error()))
