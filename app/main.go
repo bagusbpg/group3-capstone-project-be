@@ -56,7 +56,10 @@ func main() {
 
 	e := echo.New()
 
-	e.Pre(middleware.RemoveTrailingSlash(), middleware.CORS(), _midware.CustomLogger())
+	e.Pre(middleware.RemoveTrailingSlash(), middleware.CORSWithConfig((middleware.CORSConfig{
+		AllowOrigins: []string{"localhost:3000", " https://klender.xyz"},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+	})), _midware.CustomLogger())
 
 	_router.RegisterPath(e,
 		userController,
