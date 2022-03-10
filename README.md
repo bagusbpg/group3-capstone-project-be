@@ -11,7 +11,7 @@ This application provides REST API for Company Asset Management System. Among it
 ### 🕮 &nbsp;Documentation
 
 See open API documentation [here](https://app.swaggerhub.com/apis-docs/bagusbpg6/group3-capstone-API/1.0.0).
-Run Postman collection [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/ef32190e3c805ac015e8?action=collection%2Fimport#?env%5BCapstone%5D=W3sia2V5IjoidXJsIiwidmFsdWUiOiJrbGVuZGVyLnh5eiIsImVuYWJsZWQiOnRydWUsInR5cGUiOiJkZWZhdWx0Iiwic2Vzc2lvblZhbHVlIjoia2xlbmRlci54eXoiLCJzZXNzaW9uSW5kZXgiOjB9LHsia2V5IjoibG9jYWwiLCJ2YWx1ZSI6ImxvY2FsaG9zdDozMDAwIiwiZW5hYmxlZCI6dHJ1ZSwidHlwZSI6ImRlZmF1bHQiLCJzZXNzaW9uVmFsdWUiOiJsb2NhbGhvc3Q6MzAwMCIsInNlc3Npb25JbmRleCI6MX1d).
+Run Postman collection [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/0244e140bfa1e26693d4?action=collection%2Fimport#?env%5BCapstone%5D=W3sia2V5IjoidXJsIiwidmFsdWUiOiJodHRwczovL2tsZW5kZXIueHl6IiwiZW5hYmxlZCI6dHJ1ZSwidHlwZSI6ImRlZmF1bHQiLCJzZXNzaW9uVmFsdWUiOiJodHRwczovL2tsZW5kZXIueHl6Iiwic2Vzc2lvbkluZGV4IjowfSx7ImtleSI6ImxvY2FsIiwidmFsdWUiOiJsb2NhbGhvc3Q6MzAwMCIsImVuYWJsZWQiOnRydWUsInR5cGUiOiJkZWZhdWx0Iiwic2Vzc2lvblZhbHVlIjoibG9jYWxob3N0OjMwMDAiLCJzZXNzaW9uSW5kZXgiOjF9XQ==)
 
 ### 🖳 &nbsp;Installation
 To run the application, clone this repository first,
