@@ -8,7 +8,6 @@ import (
 	_historyController "capstone/be/delivery/controller/history"
 	_requestController "capstone/be/delivery/controller/request"
 	_userController "capstone/be/delivery/controller/user"
-	_midware "capstone/be/delivery/middleware"
 	_router "capstone/be/delivery/router"
 	_activityRepo "capstone/be/repository/activity"
 	_adminRepo "capstone/be/repository/admin"
@@ -54,11 +53,14 @@ func main() {
 	adminController := _adminController.New(adminRepo)
 
 	e := echo.New()
-	e.Pre(middleware.RemoveTrailingSlash(), middleware.CORSWithConfig((middleware.CORSConfig{
+	// e.Pre(middleware.RemoveTrailingSlash(), middleware.CORSWithConfig((middleware.CORSConfig{
+	// 	AllowOrigins: []string{"localhost:3000", " https://sirclo-assets-management.netlify.app"},
+	// 	AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+	// })), _midware.CustomLogger())
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"localhost:3000", " https://sirclo-assets-management.netlify.app"},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
-	})), _midware.CustomLogger())
-
+	}))
 	_router.RegisterPath(e,
 		userController,
 		assetController,
