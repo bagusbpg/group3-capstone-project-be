@@ -55,12 +55,9 @@ func main() {
 
 	e := echo.New()
 
-	// e.Pre(middleware.RemoveTrailingSlash(), middleware.CORSWithConfig((middleware.CORSConfig{
-	// 	AllowOrigins: []string{"localhost:3000", "https://klender.xyz"},
-	// 	AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
-	// })), _midware.CustomLogger())
-	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"localhost:3000", "https://klender.xyz"},
+  e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"localhost:3000", "https://sirclo-assets-management.netlify.app"},
+		AllowMethods: []string{"GET", "PUT", "POST"},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
 	}))
 
